@@ -4,6 +4,8 @@
 
 It is designed for Codex CLI, Claude Code, OpenClaw, and any agent that can read a `SKILL.md` folder and run local helper scripts.
 
+This is not automatic model switching; it is a portable handoff protocol and helper skill.
+
 ## What It Solves
 
 When one model or session stops mid-project, the next one often wastes tokens rediscovering:
@@ -39,8 +41,8 @@ tests/
 Clone the repo:
 
 ```bash
-git clone https://github.com/ciumbar/valentinb-skill.git
-cd valentinb-skill
+git clone https://github.com/ciumbar/continuity-handoff.git
+cd continuity-handoff
 ```
 
 ### Codex
@@ -200,6 +202,16 @@ Key fields:
 - `thresholds`
 
 The helper merges checklist items, decisions, commands, blockers, and assumptions by stable `id`. Files are merged by `path`. Running the same update twice should not duplicate work.
+
+## Prior Art / Comparison
+
+This project is intentionally small and portable. It is best understood as a common handoff format plus helper script, not a replacement for native agent session systems.
+
+- [`cli-continues`](https://github.com/yigitkonur/cli-continues) is the closest broader project I found. It focuses on continuing sessions across many CLI agents and includes more ambitious cross-tool orchestration. `continuity-handoff` is smaller: a skill folder, a deterministic Python helper, and repo-local state files.
+- [OpenClaw Context Handoff](https://openclawlab.com/en/docs/features/context-handoff/) is a native OpenClaw feature for automatically preserving context near limits. `continuity-handoff` complements this by giving non-OpenClaw tools the same repo-local handoff convention.
+- Claude Code has native session/memory tools such as `/resume`, `/compact`, checkpoints, and `CLAUDE.md` memory. `continuity-handoff` does not replace those; it adds a provider-neutral state file that another model or CLI can read.
+
+The goal is interoperability: if one tool stops, another tool can read `.handoff/state.json` and `.handoff/STATE.md` and continue with less rediscovery.
 
 ## Test
 

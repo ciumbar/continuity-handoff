@@ -1,0 +1,7 @@
+interface:
+  display_name: "Continuity Handoff"
+  short_description: "Resume agent work across sessions and models"
+  default_prompt: "Use $continuity-handoff to create or resume a durable handoff for this repo."
+
+policy:
+  allow_implicit_invocation: true

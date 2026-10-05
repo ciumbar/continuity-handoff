@@ -104,6 +104,10 @@ python3 continuity-handoff/scripts/handoff.py init \
   --goal "Finish the feature with tests passing"
 ```
 
+New state defaults to `mode=normal`. Repeating `init` without `--mode` preserves
+the existing mode and state; pass `--mode` explicitly to change it. `init` fills
+an empty goal when supplied and does not rewrite existing files when nothing changes.
+
 Record progress:
 
 ```bash

@@ -413,7 +413,7 @@ def command_init(args: argparse.Namespace) -> int:
             save_state(root, state)
         print(f"Handoff already exists: {state_path}")
         return 0
-    state = default_state(root, goal=args.goal or "", mode=args.mode)
+    state = default_state(root, goal=args.goal or "", mode=args.mode if args.mode is not None else "normal")
     if args.next_step:
         state["next_step"] = args.next_step
     save_state(root, state)
@@ -475,7 +475,7 @@ def build_parser() -> argparse.ArgumentParser:
     init = subparsers.add_parser("init", help="Create handoff files if missing")
     init.add_argument("--root", default=".", help="Repository root")
     init.add_argument("--goal", default="", help="Global task goal")
-    init.add_argument("--mode", default="normal", help="Work mode, for example normal or acaba")
+    init.add_argument("--mode", help="Work mode; defaults to normal for new state, preserves existing mode if omitted")
     init.add_argument("--next-step", help="Immediate next step")
     init.set_defaults(func=command_init)
 
